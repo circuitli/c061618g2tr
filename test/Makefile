@@ -10,7 +10,7 @@ MACROS_DIR     := macros
 PROJECT_SOURCES = project.v
 #COMPILE_ARGS += -g2012
 # If your includes are inside 'src/'
-COMPILE_ARGS += +incdir+$(PWD)/../deps/c061618g2
+COMPILE_ARGS += -I$(PWD)/../deps/c061618g2
 
 # =========================================================================
 # PRECISE SYSTEMVERILOG EXTENSION SCAN FIX
