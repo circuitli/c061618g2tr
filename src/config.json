@@ -21,14 +21,18 @@
 
   "FALLBACK_SDC": "src/mmu_constraints.sdc",
 
+  "VERILOG_INCLUDE_DIRS": [
+    "dir::deps/c061618g2"
+  ],
+
   "// -------------------------------------------------------------------------": "",
   "// STRICT PROCESS-SPECIFIC OVERRIDES ONLY": "",
   "// -------------------------------------------------------------------------": "",
   "pdk::ihp-sg13g2": {
     "VERILOG_DEFINES": [ "IHP_SG13G2" ],
-    
+
     "RT_MAX_LAYER": "Metal4",
-    
+
     "LVS_FLATTEN_CELLS": [],
     "LVS_IGNORE_CELLS": [
       "sg13g2_fill_1",
