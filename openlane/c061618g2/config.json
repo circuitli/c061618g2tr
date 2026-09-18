@@ -1,0 +1,143 @@
+{
+  "DESIGN_NAME": "c061618g2tr",
+  "VERILOG_FILES": [
+    "dir::../../deps/c061618g2/src/module/c061618g2tr.sv"
+  ],
+
+  "PNR_SDC_FILE": "dir::../../src/mmu_constraints.sdc",
+
+  "_IO_PIN_ORDER_CFG": "dir::pin_order.cfg",
+
+  "pins": {
+    "config": {
+      "top": [
+        "ui_in",
+        "uio_in",
+        "clk",
+        "rst_n",
+        "ena"
+      ],
+      "bottom": [
+        "uo_out",
+        "uio_out",
+        "uio_oe"
+      ]
+    }
+  },
+
+  "_synth_vector_mapping": "square",
+
+  "pdn": {
+    "enable_rails": true,
+    "multilayer": false,
+    "core_ring": false,
+    "skip_trim": false
+  },
+  "_PDN_MULTILAYER": false,
+  "_PDN_CORE_RING": false,
+  "_PDN_CONNECT_MACROS_TO_GRID": false,
+  "_PDN_ENABLE_RAILS": true,
+
+  "_PDN_CFG": "dir::pdn_cfg.tcl",
+
+  "FP_SIZING": "absolute",
+
+  "RUN_SPEF_EXTRACTION": true,
+
+  "// -------------------------------------------------------------------------": "",
+  "// 3. TARGET ENVIRONMENT ENVELOPE SEEDING (Cross-PDK Platform Controls)": "",
+  "// -------------------------------------------------------------------------": "",
+  "pdk::ihp-sg13g2": {
+    "VERILOG_DEFINES": [ "IHP_SG13G2" ],
+    "LVS_FLATTEN_CELLS": [],
+    "_LVS_FLATTEN_CELLS": [ "sg13g2_tielo", "sg13g2_tiehi", "sg13g2_antennanp", "sg13g2_fill_1", "sg13g2_fill_2", "sg13g2_fill_4", "sg13g2_decap_4", "sg13g2_decap_8" ],
+    "LVS_IGNORE_CELLS": [
+      "sg13g2_fill_1",
+      "sg13g2_fill_2",
+      "sg13g2_fill_4",
+      "sg13g2_decap_4",
+      "sg13g2_decap_8"
+    ],
+    "VDD_NETS": [ "vdd" ],
+    "GND_NETS": [ "vss" ],
+
+    "FP_CORE_UTIL": 55,
+    "PL_TARGET_DENSITY_PCT": 65,
+    "_DIE_AREA": [ 0.0, 0.0, 144.00, 37.80 ],
+    "_CORE_AREA": [ 5.76, 3.78, 138.24, 34.02 ],
+    "___DIE_AREA": [ 0.0, 0.0, 121.92, 37.80 ],
+    "___CORE_AREA": [ 5.76, 0.0, 116.16, 37.80 ],
+    "__CORE_AREA": [ 5.76, 3.78, 116.16, 34.02 ],
+    "____DIE_AREA": [ 0.0, 0.0, 110.40, 37.80 ],
+    "____CORE_AREA": [ 0.0, 0.0, 110.40, 37.80 ],
+    "_____DIE_AREA": [ 0.0, 0.0, 121.44, 37.80 ],
+    "_____CORE_AREA": [ 0.0, 0.0, 121.44, 37.80 ],
+    "DIE_AREA": [ 0.0, 0.0, 132.48, 37.80 ],
+    "CORE_AREA": [ 0.0, 0.0, 132.48, 37.80 ],
+
+    "RT_MAX_LAYER": "Metal3",
+    "PDN_HORIZONTAL_LAYER": "Metal3",
+    "PDN_VERTICAL_LAYER": "Metal2",
+    "PDN_RAIL_LAYER": "Metal1",
+    "_FP_PDN_UPPER_LAYERS": [ "Metal2", "Metal3", "Metal4" ],
+    "RT_CLOCK_MIN_LAYER": "Metal1",
+    "RT_CLOCK_MAX_LAYER": "Metal2",
+
+    "PDN_HWIDTH": 0.48,
+    "PDN_HSPACING": 0.48,
+    "PDN_HOFFSET": 3.78,
+    "PDN_HPITCH": 7.56,
+
+    "PDN_VWIDTH": 0.48,
+    "PDN_VSPACING": 0.48,
+    "PDN_VOFFSET": 10.78,
+    "PDN_VPITCH": 22.26,
+
+    "_fp_pdn_enable_pins": true,
+    "_fp_pdn_global_connections": null,
+    "_fp_io_mode": 1,
+    "_fp_io_edge_padding": 0.46,
+    "_FP_IO_MIN_DISTANCE": 0.96,
+
+    "PDN_SKIPTRIM": false,
+
+    "RUN_TAP_ENDCAP_INSERTION": true,
+    "FP_TAPCELL_DIST": 60,
+
+    "RUN_ANTENNA_REPAIR": true,
+    "RUN_HEURISTIC_DIODE_INSERTION": true
+  },
+
+  "pdk::sky130*": {
+    "VERILOG_DEFINES": [ "SKY130" ],
+    "STD_CELL_LIBRARY": "sky130_fd_sc_hd",
+    "VDD_NETS": [ "VPWR" ],
+    "GND_NETS": [ "VGND" ],
+    "FP_TAP_DISTANCE": 14,
+    "DIODE_INSERTION_STRATEGY": 0
+  },
+
+  "pdk::gf180mcu*": {
+    "VERILOG_DEFINES": [ "GF180MCU" ],
+    "STD_CELL_LIBRARY": "gf180mcu_fd_sc_mcu7t5v0",
+    "VDD_NETS": [ "VDD" ],
+    "GND_NETS": [ "VSS" ],
+    "FP_TAP_DISTANCE": 16,
+    "DIODE_INSERTION_STRATEGY": 0
+  },
+
+  "// -------------------------------------------------------------------------": "",
+  "// 1. Force the toolchain to treat the layout flatly with no clock trees.": "",
+  "// 2. Instruct Yosys to skip sequential mapping & optimize loops as gates!": "",
+  "// -------------------------------------------------------------------------": "",
+  "RUN_POST_GPL_DESIGN_REPAIR": false,
+  "CLOCK_PERIOD": 0,
+  "CLOCK_PORT": null,
+  "CLOCK_NET": null,
+  "RUN_CTS": false,
+
+  "//": "SYNTH_STRATEGY - Changing this option over to an area or raw delay strategy rewrites ABC's optimization profile, completely stripping out the crashing sequential timing sub-commands (like scorr)!",
+  "SYNTH_STRATEGY": "AREA 0"
+
+}
+  
