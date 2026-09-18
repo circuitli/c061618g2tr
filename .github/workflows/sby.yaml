@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install and Run PDK Downloader Directly
         run: |
@@ -103,7 +105,7 @@ jobs:
         #working-directory: formal
         run: |
           # Dynamically swap the relative path out for GitHub's absolute workspace path
-          sed -i 's|\.\./deps|${{ github.workspace }}/deps|g' formal/project.sby
+          #sed -i 's|\.\./deps|${{ github.workspace }}/deps|g' formal/project.sby
           
           sby -f formal/project.sby
 
