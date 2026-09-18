@@ -26,7 +26,7 @@
 `define C061618G2TR_V
 
 `ifndef SYNTHESIS_lkfjslkdfjslkdjfslk
-    `include "src/module/c061618g2.sv"
+ //   `include "src/module/c061618g2.sv"
 `endif
 
 `default_nettype none
