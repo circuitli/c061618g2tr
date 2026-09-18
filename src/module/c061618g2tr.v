@@ -43,7 +43,7 @@ module c061618g2tr (
 );
 
     wire [7:0] uo_out1, uo_out2, uo_out3;   // Dedicated hardware outputs
-    wire [7:0] uio_out, uio_out2, uio_out3;  // Bidirectional bus output network
+    wire [7:0] uio_out1, uio_out2, uio_out3;  // Bidirectional bus output network
     wire [7:0] uio_oe1, uio_oe2, uio_oe3;   // Safe output enablement bus mapping
 
     // =========================================================================
