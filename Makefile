@@ -23,10 +23,10 @@ OUTPUT_DIR    := macros
 
 # Tool execution definition hook
 OPENLANE_CONTAINER := docker run --rm \
-  -v "$(CURDIR)":"$(CURDIR)" \
+  -v "$(CURDIR)":/work \
   -v "$(PDK_ROOT)":"$(PDK_ROOT)" \
   -e PDK_ROOT="$(PDK_ROOT)" \
-  -w "$(CURDIR)" \
+  -w /work \
   ghcr.io/librelane/librelane:3.0.5 \
   python3 -m librelane
 
