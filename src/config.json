@@ -46,15 +46,15 @@
         },
         "instances": {
           "u_c061618g2_1": {
-            "location": [ "ref::$macro_x", "ref::$macro_y" ],
+            "location": [ "expr::f($macro_x)", "expr::f($macro_y)" ],
             "orientation": "N"
           },
           "u_c061618g2_2": {
-            "location": [ "ref::$macro_x", "expr::($macro_y - $macro_height)" ],
+            "location": [ "expr::f($macro_x)", "expr::f($macro_y - $macro_height)" ],
             "orientation": "N"
           },
           "u_c061618g2_3": {
-            "location": [ "ref::$macro_x", "expr::($macro_y - (2 * $macro_height))" ],
+            "location": [ "expr::f($macro_x)", "expr::f($macro_y - (2 * $macro_height))" ],
             "orientation": "N"
           }
         }
