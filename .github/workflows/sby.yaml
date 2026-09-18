@@ -102,5 +102,8 @@ jobs:
       - name: Run SymbiYosys Main Checks
         #working-directory: formal
         run: |
+          # Dynamically swap the relative path out for GitHub's absolute workspace path
+          sed -i 's|\.\./deps|${{ github.workspace }}/deps|g' formal/project.sby
+          
           sby -f formal/project.sby
 
