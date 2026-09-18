@@ -42,9 +42,9 @@ module c061618g2tr (
     input  wire [0:0] rst_n     // Active-low system reset
 );
 
-    wire [7:0] uo_out1, uo_out2, uo_out3,   // Dedicated hardware outputs
-    wire [7:0] uio_out, uio_out2, uio_out3,  // Bidirectional bus output network
-    wire [7:0] uio_oe1, uio_oe2, uio_oe3,   // Safe output enablement bus mapping
+    wire [7:0] uo_out1, uo_out2, uo_out3;   // Dedicated hardware outputs
+    wire [7:0] uio_out, uio_out2, uio_out3;  // Bidirectional bus output network
+    wire [7:0] uio_oe1, uio_oe2, uio_oe3;   // Safe output enablement bus mapping
 
     // =========================================================================
     // CORE HIERARCHICAL INSTANTIATION
@@ -92,6 +92,12 @@ module c061618g2tr (
     assign uio_out = (uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3);
     assign uio_oe  = (uio_oe1  & uio_oe2)  | (uio_oe2  & uio_oe3)  | (uio_oe1  & uio_oe3);
 
+endmodule
+
+module tt_um_c061618g2tr_bypass (input wire [7:0] ui_in, output wire [7:0] uo_out, input wire [7:0] uio_in, output wire [7:0] uio_out, output wire [7:0] uio_oe, input wire ena, clk, rst_n);
+    // This passes the IO signals direct    
+    (* dont_touch = "true" *)
+    c061618g2tr actual_design (.*); 
 endmodule
 
 `default_nettype wire

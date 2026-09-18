@@ -1,4 +1,4 @@
- * Copyright 2026 circuitli (https://github.com)
+/* Copyright 2026 circuitli (https://github.com)
  *
  * Licensed under the CERN Open Hardware Licence Version 2 - Weakly Reciprocal (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,23 @@
 `ifndef C061618G2_FORMAL_SV
 `define C061618G2_FORMAL_SV
 
-`include "src/module/c061618gtr.v"
+`include "src/module/c061618g2tr.v"
 
-`include "formal/core/c061618g2_formal.sv"
+`include "formal/module/c061618g2_formal.sv"
 
 `default_nettype none
 
 // =========================================================================
 // FORMAL VERIFICATION PROPERTIES MODULE FOR TMR VOTER
 // =========================================================================
+
 module c061618g2tr_formal (
     input  wire [7:0] ui_in,
     input  wire [7:0] uo_out,
     input  wire [7:0] uio_in,
     input  wire [7:0] uio_out,
     input  wire [7:0] uio_oe,
-    input  wire [0:0] ena,
-    input  wire [0:0] clk,
-    input  wire [0:0] rst_n,
+    input  wire       ena,
     
     // Exposed internal intermediate nets via bind mapping
     input  wire [7:0] uo_out1,  uo_out2,  uo_out3,
@@ -44,46 +43,39 @@ module c061618g2tr_formal (
     // -------------------------------------------------------------------------
     // 1. COMBINATIONAL ASSERTIONS: CORE TMR MATHEMATICAL PROOFS
     // -------------------------------------------------------------------------
-    
-    // Dedicated hardware output voter verification
-    assert_uo_out_voting: assert property (
-        @(posedge clk) (uo_out == ((uo_out1 & uo_out2) | (uo_out2 & uo_out3) | (uo_out1 & uo_out3)))
-    );
+    always_comb begin
+        
+        // Dedicated hardware output voter verification
+        assert_uo_out_voting: assert (uo_out == ((uo_out1 & uo_out2) | (uo_out2 & uo_out3) | (uo_out1 & uo_out3)));
 
-    // Bidirectional output network voter verification
-    assert_uio_out_voting: assert property (
-        @(posedge clk) (uio_out == ((uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3)))
-    );
+        // Bidirectional output network voter verification
+        assert_uio_out_voting: assert (uio_out == ((uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3)));
 
-    // Output enablement bus voter verification
-    assert_uio_oe_voting: assert property (
-        @(posedge clk) (uio_oe == ((uio_oe1 & uio_oe2) | (uio_oe2 & uio_oe3) | (uio_oe1 & uio_oe3)))
-    );
+        // Output enablement bus voter verification
+        assert_uio_oe_voting: assert (uio_oe == ((uio_oe1 & uio_oe2) | (uio_oe2 & uio_oe3) | (uio_oe1 & uio_oe3)));
+
+    end
 
     // -------------------------------------------------------------------------
     // 2. FAULT TOLERANCE CHARACTERISTICS: SINGLE PROJECT DOMAIN FAULT IMMUNITY
     // -------------------------------------------------------------------------
-    
-    // Proof: If domain 2 and domain 3 agree, an arbitrary fault on domain 1 is filtered out completely
-    assert_domain1_fault_masked: assert property (
-        @(posedge clk) ((uo_out2 == uo_out3) && (uio_out2 == uio_out3) && (uio_oe2 == uio_oe3)) -> 
-                       ((uo_out == uo_out2) && (uio_out == uio_out2) && (uio_oe == uio_oe2))
-    );
+    always_comb begin
+        
+        // Proof: If domain 2 and domain 3 agree, an arbitrary fault on domain 1 is filtered out completely
+        assert_domain1_fault_masked: assert (!((uo_out2 == uo_out3) && (uio_out2 == uio_out3) && (uio_oe2 == uio_oe3)) || 
+                                              ((uo_out == uo_out2) && (uio_out == uio_out2) && (uio_oe == uio_oe2)));
 
-    // Proof: If domain 1 and domain 3 agree, an arbitrary fault on domain 2 is filtered out completely
-    assert_domain2_fault_masked: assert property (
-        @(posedge clk) ((uo_out1 == uo_out3) && (uio_out1 == uio_out3) && (uio_oe1 == uio_oe3)) -> 
-                       ((uo_out == uo_out1) && (uio_out == uio_out1) && (uio_oe == uio_oe1))
-    );
+        // Proof: If domain 1 and domain 3 agree, an arbitrary fault on domain 2 is filtered out completely
+        assert_domain2_fault_masked: assert (!((uo_out1 == uo_out3) && (uio_out1 == uio_out3) && (uio_oe1 == uio_oe3)) || 
+                                              ((uo_out == uo_out1) && (uio_out == uio_out1) && (uio_oe == uio_oe1)));
 
-    // Proof: If domain 1 and domain 2 agree, an arbitrary fault on domain 3 is filtered out completely
-    assert_domain3_fault_masked: assert property (
-        @(posedge clk) ((uo_out1 == uo_out2) && (uio_out1 == uio_out2) && (uio_oe1 == uio_oe2)) -> 
-                       ((uo_out == uo_out1) && (uio_out == uio_out1) && (uio_oe == uio_oe1))
-    );
+        // Proof: If domain 1 and domain 2 agree, an arbitrary fault on domain 3 is filtered out completely
+        assert_domain3_fault_masked: assert (!((uo_out1 == uo_out2) && (uio_out1 == uio_out2) && (uio_oe1 == uio_oe2)) || 
+                                              ((uo_out == uo_out1) && (uio_out == uio_out1) && (uio_oe == uio_oe1)));
+                                             
+    end
 
 endmodule
-
 
 // =========================================================================
 // SYSTEMVERILOG BIND INJECTION TARGET FILE

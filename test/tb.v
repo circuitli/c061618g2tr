@@ -48,10 +48,10 @@ module tb ();
 `ifdef GL_TEST
   // Instantiate the wrapper name that the automated script injected into the netlist
   // (Change 'tt_um_c061618g2_bypass' to match the top_module name in THE info.yaml)
-  tt_um_c061618g2_bypass user_project (
+  tt_um_c061618g2tr_bypass user_project (
 `else
   // Standard RTL simulation uses your raw custom name
-  c061618g2 user_project (
+  c061618g2tr user_project (
 `endif
 
 /*

@@ -6,7 +6,7 @@
 setConfigVar("VerilogImporter.searchPaths", "");
 
 var designFile = "../test/combined_netlist.v";
-var work = importCircuitVerilog(designFile, "tt_um_c061618g2_bypass");
+var work = importCircuitVerilog(designFile, "tt_um_c061618g2tr_bypass");
 
 if (work == null) {
     print("❌ ERROR: Failed to parse the top-level structural gate netlist.");

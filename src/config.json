@@ -11,7 +11,7 @@
 
   "//": "Here are some of the variables you may want to change:",
 
-  "DESIGN_NAME": "c061618g2",
+  "DESIGN_NAME": "c061618g2tr",
   "_VERBOSE": 2,
   "_LOG_LEVEL": "DEBUG",
 
@@ -62,9 +62,6 @@
     "VERILOG_DEFINES": [ "GF180MCU" ],
     "STD_CELL_LIBRARY": "gf180mcu_fd_sc_mcu7t5v0"
   },
-
-  "// Timing is the only external aspect that must be explicitly loaded at root": "",
-  "_EXTRA_LIBS": [ "dir::../macros/lib/c061618g2.lib" ],
 
   "//": "CLOCK_PERIOD - Increase this in case you are getting setup time violations.",
   "//": "The value is in nanoseconds, so 20ns == 50MHz.",
