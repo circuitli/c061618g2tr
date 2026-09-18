@@ -25,7 +25,7 @@
 `ifndef C061618G2TR_V
 `define C061618G2TR_V
 
-`ifndef SYNTHESIS
+`ifndef SYNTHESIS_lkfjslkdfjslkdjfslk
     `include "src/module/c061618g2.sv"
 `endif
 
