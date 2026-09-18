@@ -83,6 +83,8 @@ else:
 workspace_clean = workspace_root.replace("\\", "/")
 
 # The output() method natively injects the commands back into the SBY engine queue
+output(f"read -sv {define_flag} {workspace_clean}/../deps/c061618g2/formal/module/c061618g2_formal.sv")
+#output(f"read -sv {define_flag} formal/module/c061618g2_formal.sv")
 output(f"read -sv {define_flag} {workspace_clean}/module/c061618g2tr_formal.sv")
 --pycode-end--
 # =============================================================================

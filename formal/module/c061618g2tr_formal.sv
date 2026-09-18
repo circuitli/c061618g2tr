@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-`ifndef C061618G2_FORMAL_SV
-`define C061618G2_FORMAL_SV
+`ifndef C061618G2TR_FORMAL_SV
+`define C061618G2TR_FORMAL_SV
 
 `include "src/module/c061618g2tr.v"
 
