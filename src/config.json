@@ -45,15 +45,15 @@
           "max": [ "dir::../macros/spef/c061618g2.nom.spef" ]
         },
         "instances": {
-          "u_c061618g2_1": {
+          ".*/u_c061618g2_1": {
             "location": [ "expr::($macro_x)", "expr::($macro_y)" ],
             "orientation": "N"
           },
-          "u_c061618g2_2": {
+          ".*/u_c061618g2_2": {
             "location": [ "expr::($macro_x)", "expr::($macro_y - $macro_height)" ],
             "orientation": "N"
           },
-          "u_c061618g2_3": {
+          ".*/u_c061618g2_3": {
             "location": [ "expr::($macro_x)", "expr::($macro_y - (2.0 * $macro_height))" ],
             "orientation": "N"
           }

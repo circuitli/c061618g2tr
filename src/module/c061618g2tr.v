@@ -107,9 +107,13 @@ module c061618g2tr (
 endmodule
 
 module tt_um_c061618g2tr_bypass (input wire [7:0] ui_in, output wire [7:0] uo_out, input wire [7:0] uio_in, output wire [7:0] uio_out, output wire [7:0] uio_oe, input wire ena, clk, rst_n);
-    // This passes the IO signals direct    
-    (* dont_touch = "true" *)
-    c061618g2tr actual_design (.*); 
+    (* dont_touch = "yes" *)
+    c061618g2tr actual_design (
+        .clk   (clk),
+        .rst_n (rst_n),
+        .ena   (ena),
+        .*
+    ); 
 endmodule
 
 `default_nettype wire
