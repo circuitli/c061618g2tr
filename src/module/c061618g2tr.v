@@ -35,8 +35,8 @@ module c061618g2tr (
     input  wire [7:0] ui_in,    // Dedicated hardware inputs
     output wire [7:0] uo_out,   // Dedicated hardware outputs
     input  wire [7:0] uio_in,   // Bidirectional bus input network
-    (* keep = "true" *) output wire [7:0] uio_out,  // Bidirectional bus output network
-    (* keep = "true" *) output wire [7:0] uio_oe,   // Safe output enablement bus mapping
+    (* keep = "yes" *) output wire [7:0] uio_out,  // Bidirectional bus output network
+    (* keep = "yes" *) output wire [7:0] uio_oe,   // Safe output enablement bus mapping
     input  wire [0:0] ena,      // Tiny Tapeout macro block enable signal
     input  wire [0:0] clk,      // System clock injected for wrapper compliance
     input  wire [0:0] rst_n     // Active-low system reset
@@ -49,7 +49,7 @@ module c061618g2tr (
     // =========================================================================
     // CORE HIERARCHICAL INSTANTIATION
     // =========================================================================
-    (* keep_hierarchy = "TRUE" *) 
+    (* dont_touch = "yes" *) 
     c061618g2 u_c061618g2_1 (
         .clk     (clk),
         .rst_n   (rst_n),
@@ -61,7 +61,7 @@ module c061618g2tr (
         .ena     (ena)
     );
 
-    (* keep_hierarchy = "TRUE" *) 
+    (* dont_touch = "yes" *) 
     c061618g2 u_c061618g2_2 (
         .clk     (clk),
         .rst_n   (rst_n),
@@ -73,7 +73,7 @@ module c061618g2tr (
         .ena     (ena)
     );
 
-    (* keep_hierarchy = "TRUE" *) 
+    (* dont_touch = "yes" *) 
     c061618g2 u_c061618g2_3 (
         .clk     (clk),
         .rst_n   (rst_n),
@@ -88,9 +88,21 @@ module c061618g2tr (
     // =========================================================================
     // TRIPLE MODULAR REDUNDANCY (TMR) MAJORITY VOTING FILTERS
     // =========================================================================
-    assign uo_out  = (uo_out1  & uo_out2)  | (uo_out2  & uo_out3)  | (uo_out1  & uo_out3);
-    assign uio_out = (uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3);
-    assign uio_oe  = (uio_oe1  & uio_oe2)  | (uio_oe2  & uio_oe3)  | (uio_oe1  & uio_oe3);
+    
+    // 1. Declare protected intermediate nets to hold the voter equations
+    (* dont_touch = "yes" *) wire [7:0] uo_out_voted;
+    (* dont_touch = "yes" *) wire [7:0] uio_out_voted;
+    (* dont_touch = "yes" *) wire [7:0] uio_oe_voted;
+
+    // 2. Perform the logic equations onto the protected structures
+    assign uo_out_voted  = (uo_out1  & uo_out2)  | (uo_out2  & uo_out3)  | (uo_out1  & uo_out3);
+    assign uio_out_voted = (uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3);
+    assign uio_oe_voted  = (uio_oe1  & uio_oe2)  | (uio_oe2  & uio_oe3)  | (uio_oe1  & uio_oe3);
+
+    // 3. Drive the top-level external hardware ports cleanly
+    assign uo_out  = uo_out_voted;
+    assign uio_out = uio_out_voted;
+    assign uio_oe  = uio_oe_voted;
 
 endmodule
 

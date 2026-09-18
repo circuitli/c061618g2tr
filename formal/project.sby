@@ -65,13 +65,25 @@ define_flag = "-DIHP_SG13G2" if pdk_var == "ihp-sg13g2" else ""
 #sys.stderr.write(f"\n[SBY DEBUG] PDK active variable value is: '{pdk_var}'\n")
 #sys.stderr.write(f"\n[SBY DEBUG] PDK deefine is: '{define_flag}'\n")
 
-# 2. Extract SBY's native parent workspace directory tracking hook
-# When SBY runs, it stores the original path you launched from inside SBY_WORKFLOW_DIR
-# If that variable is absent, it cleanly falls back to the absolute project workspace
-workspace_root = os.environ.get("SBY_WORKFLOW_DIR") or os.getcwd()
+# 2. DYNAMIC WORKSPACE LOOKUP (Fixes Windows task-runner paths)
+# SBY creates a directory named 'project' or 'taskname' inside the formal/ folder.
+# By checking the 'TASK' folder path, we can cleanly hop up out of it 
+# to target the true physical repository workspace root.
+task_dir = os.environ.get("TASK")
+
+if task_dir and os.path.exists(task_dir):
+    # If SBY is running the task step, jump up out of 'formal/project' to the root
+    formal_dir = os.path.dirname(os.path.abspath(task_dir))
+    workspace_root = os.path.abspath(os.path.join(formal_dir, ".."))
+else:
+    # Safe fallback if run as a raw standalone script execution
+    workspace_root = os.getcwd()
+
+# 3. Clean up backslashes to prevent Yosys string escape character bugs on Windows
+workspace_clean = workspace_root.replace("\\", "/")
 
 # The output() method natively injects the commands back into the SBY engine queue
-output(f"read -sv {define_flag} formal/module/c061618g2tr_formal.sv")
+output(f"read -sv {define_flag} {workspace_clean}/module/c061618g2tr_formal.sv")
 --pycode-end--
 # =============================================================================
 

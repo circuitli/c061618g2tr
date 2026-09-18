@@ -22,7 +22,7 @@
   "FALLBACK_SDC": "src/mmu_constraints.sdc",
 
   "VERILOG_INCLUDE_DIRS": [
-    "dir::deps/c061618g2"
+    "dir::../deps/c061618g2"
   ],
 
   "// -------------------------------------------------------------------------": "",

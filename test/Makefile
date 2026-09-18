@@ -11,7 +11,7 @@ PROJECT_SOURCES = project.v
 #COMPILE_ARGS += -g2012
 # If your includes are inside 'src/'
 
- 1. Dynamically compute the absolute path of the subproject from the test directory
+# Dynamically compute the absolute path of the subproject from the test directory
 SUBPROJECT_ROOT = $(abspath $(PWD)/../deps/c061618g2)
 VERILOG_INCLUDE_DIRS += $(SUBPROJECT_ROOT)
 
