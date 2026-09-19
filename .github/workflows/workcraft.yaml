@@ -28,9 +28,9 @@ jobs:
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
     # Grant explicit API permission to read actions history and list artifacts
-    permissions:
-      actions: read
-      contents: read
+    #permissions:
+      #actions: read
+      #contents: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
