@@ -47,7 +47,6 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
-          mkdir -p macros/gds macros/lef macros/lib macros/nl macros/pnl macros/spef
 
       - name: Install and Run PDK Downloader Directly
         if: steps.check_makefile.outputs.exists == 'true'
@@ -87,6 +86,7 @@ jobs:
           # Execute make exactly once and record the numeric status code
           make
           make_exit_code=$?
+          make ensure
         
           # Re-enable standard safe exit constraints
           set -e
@@ -119,9 +119,11 @@ jobs:
           name: macro-signoff-logs
           path: |
             **/runs/*/*
+          if-no-files-found: ignore
 
       - name: 💾 Upload Macro Abstract Views for Top-Level Assembly
         uses: actions/upload-artifact@v4
         with:
           name: precompiled-macros
           path: macros/
+          if-no-files-found: ignore
