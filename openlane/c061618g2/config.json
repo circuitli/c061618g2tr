@@ -32,16 +32,10 @@
 
   "_synth_vector_mapping": "square",
 
-  "pdn": {
-    "enable_rails": true,
-    "multilayer": false,
-    "core_ring": false,
-    "skip_trim": false
-  },
-  "_PDN_MULTILAYER": false,
-  "_PDN_CORE_RING": false,
+  "PDN_MULTILAYER": false,
+  "PDN_CORE_RING": false,
   "_PDN_CONNECT_MACROS_TO_GRID": false,
-  "_PDN_ENABLE_RAILS": true,
+  "PDN_ENABLE_RAILS": true,
 
   "_PDN_CFG": "dir::pdn_cfg.tcl",
 
