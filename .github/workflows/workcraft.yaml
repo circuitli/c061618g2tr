@@ -27,6 +27,10 @@ jobs:
   workcraft:
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
+    # Grant explicit API permission to read actions history and list artifacts
+    permissions:
+      actions: read
+      contents: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -209,7 +213,7 @@ jobs:
           echo "Checking for macro artifacts in run: $RUN_ID..."
           
           # Attempt to download the artifact via GitHub CLI; suppress 404 failure code
-          if gh run download "$RUN_ID" --name precompiled-macros --dir macros/ 2>/dev/null; then
+          if gh run download "$RUN_ID" --repo "${{ github.repository }}" --name precompiled-macros --dir macros/ 2>/dev/null; then
             echo "Successfully loaded precompiled macros."
           else
             echo "No macros directory found."
