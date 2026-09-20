@@ -62,7 +62,7 @@ jobs:
           
           echo "📥 Performing native source clone of the IHP dev branch..."
           # 2. Force a fast clone directly into the path where tools expect it
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$REPO_PDK_ROOT/ihp-sg13g2"
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$REPO_PDK_ROOT"
           
           # 3. Export uniform environment variables so subsequent actions find it seamlessly
           echo "PDK_ROOT=$REPO_PDK_ROOT" >> $GITHUB_ENV
