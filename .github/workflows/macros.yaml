@@ -47,27 +47,24 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: Fetch and Link IHP PDK dev Branch Directly
+                - name: Fetch and Link IHP PDK dev Branch Directly
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PDK_ROOT: ${{ env.PDK_ROOT }}
         run: |
           set -eo pipefail
 
-          export PDK_ROOT="${{ github.workspace }}/pdk"
-          export PDK_TARGET="ihp-sg13g2"
-
-          # 1. Clear out any broken tracking links or layout remains
-          rm -rf $PDK_ROOT
-          mkdir -p $PDK_ROOT
+          # 1. Establish an absolute, clean runner folder outside the workspace wrapper
+          export REPO_PDK_ROOT="/home/runner/pdk"
+          
+          rm -rf "$REPO_PDK_ROOT"
+          mkdir -p "$REPO_PDK_ROOT"
           
           echo "📥 Performing native source clone of the IHP dev branch..."
-          # 2. Force a fast clone of the official IHP repository directly into your path
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git $PDK_ROOT/ihp-sg13g2
+          # 2. Force a fast clone directly into the path where tools expect it
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$REPO_PDK_ROOT/ihp-sg13g2"
           
-          # 3. Export environment variables to expose paths to subsequent tools
-          echo "PDK_ROOT=/home/runner/pdk" >> $GITHUB_ENV
+          # 3. Export uniform environment variables so subsequent actions find it seamlessly
+          echo "PDK_ROOT=$REPO_PDK_ROOT" >> $GITHUB_ENV
           echo "PDK=ihp-sg13g2" >> $GITHUB_ENV
 
       # Hardens the macros sub-config natively
