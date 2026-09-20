@@ -29,6 +29,7 @@
 
 `default_nettype none
 
+(* keep_hierarchy = "yes", dont_touch = "yes" *)
 module tt_output_voter #(
     parameter WIDTH = 8  // Easily change the bus size for all signals at once
 )(
