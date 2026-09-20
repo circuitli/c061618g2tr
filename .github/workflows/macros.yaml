@@ -63,7 +63,7 @@ jobs:
           
           echo "📥 Performing native source clone of the IHP dev branch..."
           # 2. Clone the full repository to the temporary directory inside the workspace
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com "$TEMP_CLONE_DIR"
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
           
           echo "🔗 Linking the internal process folder to PDK_ROOT..."
           # 3. Create a relative symbolic link inside the workspace directory
