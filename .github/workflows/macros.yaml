@@ -47,26 +47,36 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Fetch and Link IHP PDK dev Branch Directly
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eo pipefail
 
-          # 1. Establish the clean top-level pdk target folder structure
-          export TRUE_PDK_ROOT="${{ github.workspace }}/pdk"
-          rm -rf "$TRUE_PDK_ROOT"
-          mkdir -p "$TRUE_PDK_ROOT"
+          # 1. Define clean workspace target directory variables
+          export TARGET_PDK_DIR="${{ github.workspace }}/pdk"
+          export TEMP_CLONE_DIR="${{ github.workspace }}/pdk_tmp"
           
-          echo "📥 Performing native source clone of the IHP dev branch..."
-          # 2. Clone the IHP repository DIRECTLY into the nested target directory string
-          # This maps the files to $PDK_ROOT/ihp-sg13g2 exactly as the test makefile expects!
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TRUE_PDK_ROOT/ihp-sg13g2"
+          rm -rf "$TARGET_PDK_DIR" "$TEMP_CLONE_DIR"
+          mkdir -p "$TARGET_PDK_DIR"
           
-          # 3. Expose the environment states cleanly to subsequent runners
-          echo "PDK_ROOT=$TRUE_PDK_ROOT" >> $GITHUB_ENV
+          echo "📥 Performing native source clone..."
+          # 2. Clone the full repository structure to a temporary folder
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
+          
+          echo "📁 Moving internal process folder to eliminate double nesting..."
+          # 3. Move the internal process folder directly to where LibreLane expects it
+          # This extracts 'ihp-pdk_repo/ihp-sg13g2' straight to 'pdk/ihp-sg13g2'
+          mv "$TEMP_CLONE_DIR/ihp-sg13g2" "$TARGET_PDK_DIR/"
+          
+          # 4. Clean up the empty temporary download directory
+          rm -rf "$TEMP_CLONE_DIR"
+          
+          # 5. Export environment tracking configurations
+          echo "PDK_ROOT=$TARGET_PDK_DIR" >> $GITHUB_ENV
           echo "PDK=ihp-sg13g2" >> $GITHUB_ENV
+
 
       # Hardens the macros sub-config natively
       - name: 🔨 Compile Internal Hard Macros Natively
