@@ -63,7 +63,7 @@ jobs:
           
           echo "📥 Performing native source clone of the IHP dev branch..."
           # 2. Clone the full repository into a temporary directory
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com "$TEMP_CLONE_DIR"
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
           
           echo "🔗 Linking the internal process folder to PDK_ROOT with correct naming..."
           # 3. FIX: Create the symlink using an UNDERSCORE (ihp_sg13g2) instead of a hyphen
