@@ -54,24 +54,19 @@ jobs:
         run: |
           set -eo pipefail
 
-          # 1. Establish absolute paths INSIDE the default GitHub workspace
-          export TEMP_CLONE_DIR="${{ github.workspace }}/ihp_pdk_repo"
+          # 1. Establish the clean top-level pdk target folder structure
           export TRUE_PDK_ROOT="${{ github.workspace }}/pdk"
-          
-          rm -rf "$TEMP_CLONE_DIR" "$TRUE_PDK_ROOT"
+          rm -rf "$TRUE_PDK_ROOT"
           mkdir -p "$TRUE_PDK_ROOT"
           
           echo "📥 Performing native source clone of the IHP dev branch..."
-          # 2. Clone the full repository into a temporary directory
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
+          # 2. Clone the IHP repository DIRECTLY into the nested target directory string
+          # This maps the files to $PDK_ROOT/ihp-sg13g2 exactly as the test makefile expects!
+          git clone --branch dev --depth 1 --recurse-submodules https://github.comhttps://github.com/IHP-GmbH/IHP-Open-PDK.git "$TRUE_PDK_ROOT/ihp-sg13g2"
           
-          echo "🔗 Linking the internal process folder to PDK_ROOT with correct naming..."
-          # 3. FIX: Create the symlink using an UNDERSCORE (ihp_sg13g2) instead of a hyphen
-          ln -s "$TEMP_CLONE_DIR/ihp-sg13g2" "$TRUE_PDK_ROOT/ihp_sg13g2"
-          
-          # 4. Export the matching PDK naming configurations to the environment variables
+          # 3. Expose the environment states cleanly to subsequent runners
           echo "PDK_ROOT=$TRUE_PDK_ROOT" >> $GITHUB_ENV
-          echo "PDK=ihp_sg13g2" >> $GITHUB_ENV
+          echo "PDK=ihp-sg13g2" >> $GITHUB_ENV
 
       # Hardens the macros sub-config natively
       - name: 🔨 Compile Internal Hard Macros Natively
