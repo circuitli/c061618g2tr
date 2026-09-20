@@ -33,7 +33,7 @@ module tmr_voter #(
     input  wire [WIDTH-1:0] in1,
     input  wire [WIDTH-1:0] in2,
     input  wire [WIDTH-1:0] in3,
-    output wire [WIDTH-1:0] out
+    (* dont_touch = "yes", keep = "true" *) output wire [WIDTH-1:0] out
 );
 
     // Majority voting logic applied bitwise across the entire vector width
