@@ -48,25 +48,31 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
       
-      - name: Fetch and Link IHP PDK dev Branch Directly
+            - name: Fetch and Link IHP PDK dev Branch Directly
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eo pipefail
 
-          # 1. Establish an absolute, clean runner folder outside the workspace wrapper
-          export REPO_PDK_ROOT="/home/runner/pdk"
+          # 1. Establish isolated, absolute paths
+          export TEMP_CLONE_DIR="/home/runner/ihp_pdk_repo"
+          export TRUE_PDK_ROOT="/home/runner/pdk"
           
-          rm -rf "$REPO_PDK_ROOT"
-          mkdir -p "$REPO_PDK_ROOT"
+          rm -rf "$TEMP_CLONE_DIR" "$TRUE_PDK_ROOT"
+          mkdir -p "$TRUE_PDK_ROOT"
           
           echo "📥 Performing native source clone of the IHP dev branch..."
-          # 2. Force a fast clone directly into the path where tools expect it
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$REPO_PDK_ROOT"
+          # 2. Clone the full repository to the temporary directory
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
           
-          # 3. Export uniform environment variables so subsequent actions find it seamlessly
-          echo "PDK_ROOT=$REPO_PDK_ROOT" >> $GITHUB_ENV
+          echo "🔗 Linking the internal process folder to PDK_ROOT..."
+          # 3. Symlink the ACTUAL process directory inside the repo to /home/runner/pdk/ihp-sg13g2
+          ln -s "$TEMP_CLONE_DIR/ihp-sg13g2" "$TRUE_PDK_ROOT/ihp-sg13g2"
+          
+          # 4. Export the accurate global environment states
+          echo "PDK_ROOT=$TRUE_PDK_ROOT" >> $GITHUB_ENV
           echo "PDK=ihp-sg13g2" >> $GITHUB_ENV
+
 
       # Hardens the macros sub-config natively
       - name: 🔨 Compile Internal Hard Macros Natively
