@@ -62,7 +62,7 @@ jobs:
           echo "📥 Performing native source clone of the IHP dev branch..."
           # 2. Clone the IHP repository DIRECTLY into the nested target directory string
           # This maps the files to $PDK_ROOT/ihp-sg13g2 exactly as the test makefile expects!
-          git clone --branch dev --depth 1 --recurse-submodules https://github.comhttps://github.com/IHP-GmbH/IHP-Open-PDK.git "$TRUE_PDK_ROOT/ihp-sg13g2"
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TRUE_PDK_ROOT/ihp-sg13g2"
           
           # 3. Expose the environment states cleanly to subsequent runners
           echo "PDK_ROOT=$TRUE_PDK_ROOT" >> $GITHUB_ENV
