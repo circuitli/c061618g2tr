@@ -19,6 +19,7 @@
 `include "src/module/c061618g2tr.v"
 
 `include "formal/module/c061618g2_formal.sv"
+`include "formal/module/tt_output_voter_formal.sv"
 
 `default_nettype none
 

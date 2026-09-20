@@ -25,9 +25,7 @@
 `ifndef C061618G2TR_V
 `define C061618G2TR_V
 
-`ifndef SYNTHESIS_lkfjslkdfjslkdjfslk
- //   `include "src/module/c061618g2.sv"
-`endif
+`include "src/module/tt_output_voter.v"
 
 `default_nettype none
 
@@ -95,9 +93,28 @@ module c061618g2tr (
     (* dont_touch = "yes" *) wire [7:0] uio_oe_voted;
 
     // 2. Perform the logic equations onto the protected structures
-    assign uo_out_voted  = (uo_out1  & uo_out2)  | (uo_out2  & uo_out3)  | (uo_out1  & uo_out3);
-    assign uio_out_voted = (uio_out1 & uio_out2) | (uio_out2 & uio_out3) | (uio_out1 & uio_out3);
-    assign uio_oe_voted  = (uio_oe1  & uio_oe2)  | (uio_oe2  & uio_oe3)  | (uio_oe1  & uio_oe3);
+    // Instantiate the voters using explicit port mapping and width parameters
+    
+    (* dont_touch = "yes" *)
+    tt_output_voter #(.WIDTH(8)) u_tt_output_voter (
+        // Redundant input groups
+        .uo_out1       (uo_out1),
+        .uo_out2       (uo_out2),
+        .uo_out3       (uo_out3),
+        
+        .uio_out1      (uio_out1),
+        .uio_out2      (uio_out2),
+        .uio_out3      (uio_out3),
+        
+        .uio_oe1       (uio_oe1),
+        .uio_oe2       (uio_oe2),
+        .uio_oe3       (uio_oe3),
+
+        // Hardened voted outputs
+        .uo_out_voted  (uo_out_voted),
+        .uio_out_voted (uio_out_voted),
+        .uio_oe_voted  (uio_oe_voted)
+    );
 
     // 3. Drive the top-level external hardware ports cleanly
     assign uo_out  = uo_out_voted;
