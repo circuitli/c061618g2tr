@@ -58,8 +58,6 @@ jobs:
           export PDK_ROOT="${{ github.workspace }}/pdk"
           export PDK_TARGET="ihp-sg13g2"
 
-          pip install ciel
-
           # 1. Clear out any broken tracking links or layout remains
           rm -rf $PDK_ROOT
           mkdir -p $PDK_ROOT
