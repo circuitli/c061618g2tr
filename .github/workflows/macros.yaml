@@ -48,7 +48,7 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
       
-            - name: Fetch and Link IHP PDK dev Branch Directly
+      - name: Fetch and Link IHP PDK dev Branch Directly
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
