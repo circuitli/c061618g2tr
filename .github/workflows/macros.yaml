@@ -54,25 +54,24 @@ jobs:
         run: |
           set -eo pipefail
 
-          # 1. Establish isolated, absolute paths
-          export TEMP_CLONE_DIR="/home/runner/ihp_pdk_repo"
-          export TRUE_PDK_ROOT="/home/runner/pdk"
+          # 1. Establish absolute paths INSIDE the default GitHub workspace
+          export TEMP_CLONE_DIR="${{ github.workspace }}/ihp_pdk_repo"
+          export TRUE_PDK_ROOT="${{ github.workspace }}/pdk"
           
           rm -rf "$TEMP_CLONE_DIR" "$TRUE_PDK_ROOT"
           mkdir -p "$TRUE_PDK_ROOT"
           
           echo "📥 Performing native source clone of the IHP dev branch..."
-          # 2. Clone the full repository to the temporary directory
-          git clone --branch dev --depth 1 --recurse-submodules https://github.com/IHP-GmbH/IHP-Open-PDK.git "$TEMP_CLONE_DIR"
+          # 2. Clone the full repository to the temporary directory inside the workspace
+          git clone --branch dev --depth 1 --recurse-submodules https://github.com "$TEMP_CLONE_DIR"
           
           echo "🔗 Linking the internal process folder to PDK_ROOT..."
-          # 3. Symlink the ACTUAL process directory inside the repo to /home/runner/pdk/ihp-sg13g2
+          # 3. Create a relative symbolic link inside the workspace directory
           ln -s "$TEMP_CLONE_DIR/ihp-sg13g2" "$TRUE_PDK_ROOT/ihp-sg13g2"
           
-          # 4. Export the accurate global environment states
+          # 4. Export paths targeting the workspace directory so the Docker wrapper mounts them
           echo "PDK_ROOT=$TRUE_PDK_ROOT" >> $GITHUB_ENV
           echo "PDK=ihp-sg13g2" >> $GITHUB_ENV
-
 
       # Hardens the macros sub-config natively
       - name: 🔨 Compile Internal Hard Macros Natively
