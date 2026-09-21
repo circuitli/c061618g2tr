@@ -237,8 +237,8 @@ src/techmap/aoi211_1.v                    ../deps/c061618g2/src/techmap/aoi211_1
 src/techmap/oai211_1.v                    ../deps/c061618g2/src/techmap/oai211_1.v
 src/cell/async_latch_cell.v               ../deps/c061618g2/src/cell/async_latch_cell.v
 src/cell/safe_async_mux.sv                ../deps/c061618g2/src/cell/safe_async_mux.sv
-src/defs/mmu_defs.sv                      ../deps/c061618g2/src/defs/mmu_defs.sv
-src/core/mmu_core.sv                      ../deps/c061618g2/src/core/mmu_core.sv
+src/defs/c061618g2_defs.sv                      ../deps/c061618g2/src/defs/c061618g2_defs.sv
+src/core/c061618g2_core.sv                      ../deps/c061618g2/src/core/c061618g2_core.sv
 src/module/async_glitch_filter.sv         ../deps/c061618g2/src/module/async_glitch_filter.sv
 src/module/async_glitch_filter_bank.sv    ../deps/c061618g2/src/module/async_glitch_filter_bank.sv
 src/module/mueller_inertial_delay_filter.v       ../deps/c061618g2/src/module/mueller_inertial_delay_filter.v
@@ -259,8 +259,8 @@ formal/techmap/aoi211_1_formal.sv                 ../deps/c061618g2/formal/techm
 formal/techmap/oai211_1_formal.sv                 ../deps/c061618g2/formal/techmap/oai211_1_formal.sv
 formal/cell/safe_async_mux_formal.sv              ../deps/c061618g2/formal/cell/safe_async_mux_formal.sv
 formal/cell/async_latch_cell_formal.sv            ../deps/c061618g2/formal/cell/async_latch_cell_formal.sv
-formal/defs/mmu_defs_formal.sv                    ../deps/c061618g2/formal/defs/mmu_defs_formal.sv
-formal/core/mmu_core_formal.sv                    ../deps/c061618g2/formal/core/mmu_core_formal.sv
+formal/defs/c061618g2_defs_formal.sv                    ../deps/c061618g2/formal/defs/c061618g2_defs_formal.sv
+formal/core/c061618g2_core_formal.sv                    ../deps/c061618g2/formal/core/c061618g2_core_formal.sv
 formal/module/async_glitch_filter_formal.sv       ../deps/c061618g2/formal/module/async_glitch_filter_formal.sv
 formal/module/async_glitch_filter_bank_formal.sv  ../deps/c061618g2/formal/module/async_glitch_filter_bank_formal.sv
 formal/module/mueller_inertial_delay_filter_formal.sv       ../deps/c061618g2/formal/module/mueller_inertial_delay_filter_formal.sv
